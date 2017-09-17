@@ -79,7 +79,7 @@ Listen(keys []string, ch chan string)
 
    type ServicesData []* ServiceData
 
-``
+```
 
 ### Consul
 
