@@ -1,4 +1,4 @@
-package examples
+package main
 
 import (
 	"fmt"
@@ -24,7 +24,7 @@ func main(){
 
 	cm := littleboat.NewConfigManager(provider)
 
-	err := cm.Get("services/demo",&st, utils.YAML)
+	err := cm.Get("demo/demo",&st, utils.YAML)
 
 	fmt.Println(err, st.A)
 }

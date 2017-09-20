@@ -1,4 +1,4 @@
-package examples
+package main
 
 import (
 	"os"
@@ -13,7 +13,7 @@ func main(){
 
 	provider, err := k8s.NewK8SConfigProvider(
 		&k8s.K8SConfigProviderConfig{
-			Namespace:"dev",
+			Namespace:"gateway",
 		},
 	)
 
@@ -25,19 +25,22 @@ func main(){
 
 	var st Service
 
-	cm.Get("services",&st, utils.YAML)
+	cm.Get("gateway-services.yaml",&st, utils.YAML)
 
 	fmt.Println(st.Services[0].Code)
 
 
 	ch := make(chan string)
 
-	cm.Listen([]string{"services"}, ch)
+	cm.Listen([]string{"gateway-services.yaml"}, ch)
 
-	select {
-	case v := <-ch:
-		fmt.Println(v)
+	for {
+		select {
+		case v := <-ch:
+			fmt.Println(v)
+		}
 	}
+
 
 }
 
