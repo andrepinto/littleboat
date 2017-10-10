@@ -10,6 +10,7 @@ var once sync.Once
 type ConfigurationProvider interface {
 	Load(cfg interface{}, key string, format string) (interface{}, error)
 	Listen(keys []string, ch chan string) error
+	SimpleLoad(key string) ([]byte, error)
 }
 
 
@@ -36,6 +37,11 @@ func(cm *ConfigManager) Get(key string, cfg interface{}, format string) (error) 
 	_, err := cm.provider.Load(cfg, key, format)
 
 	return  err
+}
+
+func(cm *ConfigManager) SimpleGet(key string) ([]byte,error) {
+	data, err := cm.provider.SimpleLoad(key)
+	return  data, err
 }
 
 func(cm *ConfigManager) Listen(keys []string, ch chan string){

@@ -1,5 +1,5 @@
-hash: 19ac214cb1e2178e698c0db05dc5b4260f170b784bea0bbf0ae737a46e3a1802
-updated: 2017-09-20T10:50:11.308860161+01:00
+hash: 4eee86b3c1c313c5d85d0c3c6e13b8f9ad174a61e01063ee2e7db30957e6a764
+updated: 2017-10-10T15:40:16.372269981+01:00
 imports:
 - name: github.com/davecgh/go-spew
   version: 5215b55f46b2b919f50a1df0eaa5886afe4e3b3d
@@ -39,6 +39,10 @@ imports:
   version: 44145f04b68cf362d9c4df2182967c2275eaefed
 - name: github.com/google/gofuzz
   version: 44d81051d367757e1c7c6a5a86423ece9afcf63c
+- name: github.com/gorilla/handlers
+  version: a4043c62cc2329bacda331d33fc908ab11ef0ec3
+- name: github.com/gorilla/mux
+  version: 24fca303ac6da784b9e8269f724ddeb0b2eea5e7
 - name: github.com/hashicorp/consul
   version: 112c0603d3d6fb23ab5f15e8fdb1a761da8eaf9a
   subpackages:

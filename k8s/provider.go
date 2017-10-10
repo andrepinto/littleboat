@@ -46,6 +46,12 @@ func (cf *K8SConfigProvider) Load(cfg interface{},  key string, format string) (
 
 }
 
+func (cf *K8SConfigProvider) SimpleLoad(key string) ([]byte, error){
+	data, err := cf.Client.GetConfigMap(cf.Namespace, key)
+	return []byte(data.Data[key]), err
+
+}
+
 func (cf *K8SConfigProvider) Listen(keys []string, ch chan string) error{
 
 	sharedInformers := informers.NewSharedInformerFactory(cf.Client.Client, 10*time.Minute)

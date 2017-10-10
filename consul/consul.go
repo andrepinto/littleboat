@@ -47,9 +47,13 @@ func (cf *ConsulConfig) Load(cfg interface{},  key string, format string) (inter
 	}
 }
 
-func (cf *ConsulConfig)LoadJSONFromRemote( cfg interface{}) (interface{}, error) {
+func (cf *ConsulConfig) SimpleLoad(key string) ([]byte, error){
+	cf.Key = key
+	value, err := cf.getConsulData()
+	return value, err
+}
 
-
+func (cf *ConsulConfig) getConsulData() ([]byte, error){
 	configKey := cf.Key
 	client, err := api.NewClient(cf.Api)
 	if err != nil {
@@ -66,7 +70,16 @@ func (cf *ConsulConfig)LoadJSONFromRemote( cfg interface{}) (interface{}, error)
 	if len(kvPair.Value) == 0 {
 		return nil, err
 	}
-	if err = json.Unmarshal(kvPair.Value, &cfg); err != nil {
+	return kvPair.Value, nil
+}
+
+
+func (cf *ConsulConfig)LoadJSONFromRemote( cfg interface{}) (interface{}, error) {
+
+
+	value, err := cf.getConsulData()
+
+	if err = json.Unmarshal(value, &cfg); err != nil {
 		return nil, err
 	}
 	return cfg, nil
@@ -74,24 +87,10 @@ func (cf *ConsulConfig)LoadJSONFromRemote( cfg interface{}) (interface{}, error)
 
 
 func (cf *ConsulConfig)LoadYAMLFromRemote( cfg interface{}) (interface{}, error) {
-	configKey := cf.Key
-	client, err := api.NewClient(cf.Api)
-	if err != nil {
-		return nil, err
-	}
-	kv := client.KV()
-	kvPair, _, err := kv.Get(configKey, nil)
-	if err != nil {
-		return nil, err
-	}
-	if kvPair == nil {
-		return nil, err
-	}
-	if len(kvPair.Value) == 0 {
-		return nil, err
-	}
 
-	if err =  yaml.Unmarshal(kvPair.Value, cfg); err != nil {
+	value, err := cf.getConsulData()
+
+	if err =  yaml.Unmarshal(value, cfg); err != nil {
 		return nil, err
 	}
 	return cfg, nil
